@@ -44,3 +44,61 @@ CREATE TABLE medical_histories_treatments (
 );
 
 
+-- Creating foreign keys indexes
+CREATE INDEX IF NOT EXISTS medical_histories_index
+    ON public.medical_histories USING btree
+    (patient_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.medical_histories
+    CLUSTER ON medical_histories_index;
+
+
+CREATE INDEX IF NOT EXISTS medical_histories_treatments_treatment_index
+    ON public.medical_histories_treatments USING btree
+    (treatment_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.medical_histories_treatments
+    CLUSTER ON medical_histories_treatments_treatment_index;
+
+
+
+CREATE INDEX IF NOT EXISTS medical_histories_treatments_medical_index
+    ON public.medical_histories_treatments USING btree
+    (medical_history_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.medical_histories_treatments
+    CLUSTER ON medical_histories_treatments_medical_index;
+
+
+
+CREATE INDEX IF NOT EXISTS invoice_items_treatment_index
+    ON public.invoices_items USING btree
+    (treatment_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.invoices_items
+    CLUSTER ON invoice_items_treatment_index;
+
+
+
+
+CREATE INDEX IF NOT EXISTS invoice_items_invoiceid_index
+    ON public.invoices_items USING btree
+    (invoice_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.invoices_items
+    CLUSTER ON invoice_items_invoiceid_index;
+
+
+
+CREATE INDEX IF NOT EXISTS invoices_medical_history_index
+    ON public.invoices USING btree
+    (medical_history_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.invoices
+    CLUSTER ON invoices_medical_history_index;
